@@ -7,6 +7,7 @@ const ChatBot = () => {
     {
       message: "Hello!",
       isUser: "false",
+      isimage: "false",
     },
   ]);
 
