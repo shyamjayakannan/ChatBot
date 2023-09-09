@@ -5,23 +5,54 @@ import classes from "../../styles/ChatBot.module.css";
 import Chat from "./Chat";
 import ChatLogo from "./ChatLogo";
 import Image from "next/image";
+import FileUpload from "../upload/Upload";
+import useFileUpload from "../../hook/useFileUpload";
 
 const ChatContainer = ({ chat, setChat }) => {
   const { answer } = useBot();
+  const { fileUpload } = useFileUpload();
   const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const [file, setFile] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const callBot = async () => {
     if (question.trim().length == 0) return;
-    setChat((prev) => [...prev, { message: question, isUser: "true" }]);
+
     setIsLoading(true);
-    const response = await answer(question);
+
+    var response = "";
+
+    if (selectedImage != null) {
+      setChat((prev) => [
+        ...prev,
+        {
+          message: [question, selectedImage],
+          isUser: "true",
+          isimage: "true",
+        },
+      ]);
+      response = await fileUpload(question, file);
+    } else {
+      setChat((prev) => [
+        ...prev,
+        { message: question, isUser: "true", isimage: "false" },
+      ]);
+      response = await answer(question);
+    }
+
     setQuestion("");
+    setSelectedImage(null);
+    setFile(null);
+
     if (response?.length > 0) {
       setChat((prev) => [
         ...prev,
-        { message: response[0].text, isUser: "false" },
+        { message: response[0].text, isUser: "false", isimage: "false" },
       ]);
     }
+
     setIsLoading(false);
   };
   return (
@@ -36,6 +67,11 @@ const ChatContainer = ({ chat, setChat }) => {
         <Chat chat={chat} />
       </div>
       <div className={classes["input-container"]}>
+        <FileUpload
+          setFile={setFile}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
         <input
           type="text"
           name="chat"
