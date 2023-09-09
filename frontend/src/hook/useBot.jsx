@@ -21,18 +21,19 @@ const useBot = () => {
 
   const answer = async (question) => {
     try {
+      console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/answer`,
+        "http://localhost:8501/chatbot",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.API_BOT}`,
           },
           body: JSON.stringify({ question: question }),
         }
       );
       const data = await response.json();
+      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
