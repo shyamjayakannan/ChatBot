@@ -4,7 +4,6 @@ import ChatLogo from "./ChatLogo";
 import Image from "next/image";
 
 const ChatItem = ({ data }) => {
-  console.log(data);
   return (
     <>
       {data.isUser == "true" ? (

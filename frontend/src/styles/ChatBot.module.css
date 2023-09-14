@@ -74,6 +74,7 @@
   font-size: 1rem;
   border: none;
   outline: none;
+  word-wrap: break-word;
 }
 .left {
   align-self: flex-start;
@@ -82,13 +83,19 @@
 .right {
   align-self: flex-end;
   text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.right > p {
+  color: #0000ff;
 }
 .right > img {
-  width: 260px;
-  height: 150px;
-  object-fit: contain;
+  width: 310px;
+  height: 310px;
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  margin-top: 0.25rem;
 }
 .avatar {
   display: flex;
@@ -116,6 +123,9 @@
   border-radius: 0px 15px 15px 15px;
   font-size: 0.9rem;
   display: table-cell;
+  max-width: 500px;
+  word-wrap: break-word;
+  text-align: left;
 }
 .sending {
   cursor: pointer;

@@ -23,11 +23,14 @@
 }
 .delete {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -8px;
+  right: -8px;
   color: #0000ff;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
+  background-color: #c1c1c1;
   padding: 0.1rem 0.2rem;
+  border-radius: 50%;
+  text-align: center;
 }
 .fileImage img {
   width: 40px;

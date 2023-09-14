@@ -2,10 +2,10 @@
 import classes from "../../styles/ChatBot.module.css";
 import { useState } from "react";
 import ChatContainer from "./ChatContainer";
-const ChatBot = () => {
+const ChatBot = ({ id }) => {
   const [chat, setChat] = useState([
     {
-      message: "Hello!",
+      message: "Hello ask me anything!",
       isUser: "false",
       isimage: "false",
     },
@@ -13,7 +13,7 @@ const ChatBot = () => {
 
   return (
     <div className={classes.containerchatbot}>
-      <ChatContainer setChat={setChat} chat={chat} />
+      <ChatContainer setChat={setChat} chat={chat} id={id} />
     </div>
   );
 };
