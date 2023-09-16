@@ -7,7 +7,7 @@ module.exports = getConversation = async (conversationId) => {
     const conversation = await connection
       .collection("conversations")
       .findOne({ _id: new ObjectId(conversationId) });
-    console.log(conversation);
+
     const populatedConversation = conversation.messages;
     for (const conversation of populatedConversation) {
       if (conversation.postedById === process.env.CHATBOT_ID) {

@@ -25,7 +25,9 @@ module.exports = addMessageToConversationRoutes = {
         const updatedConversation = await getConversation(conversationId);
         res.status(200).json({ updatedConversation });
       } else {
-        res.status(400).json({ error: "You are Authorized!" });
+        res
+          .status(400)
+          .json({ error: "You are Authorized!", conversation: [] });
       }
     } catch (err) {
       console.log(err.message);

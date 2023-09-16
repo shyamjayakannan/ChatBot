@@ -11,9 +11,12 @@ module.exports = getUserConversationsRoute = {
       const user = await connection.collection("users").findOne({ id: userId });
 
       if (req.headers.authorization !== user.token) {
-        return res.status(403).json({
-          message: "Users are only allowed to access their own conversations",
-        });
+        return res.status(403).json([
+          {
+            id: "null",
+            name: "Users are only allowed to access conversations",
+          },
+        ]);
       }
       const conversations = await getUserConversations(userId);
       res.status(200).json(conversations);

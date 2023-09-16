@@ -1,6 +1,9 @@
+import { useLocationLocalStorage } from "./LocationLocalStorage";
+
 const usecreateConversation = () => {
+  const { fetchPersonalDetails } = useLocationLocalStorage();
   const create = async (name, chat) => {
-    const userId = process.env.NEXT_PUBLIC_UID;
+    const userId = fetchPersonalDetails().data.id;
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/conversations`,

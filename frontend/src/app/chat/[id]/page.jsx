@@ -1,16 +1,19 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
 import ChatBot from "../../../components/chatBot/ChatBot";
+import { useParams } from "next/navigation";
+import { useLocationLocalStorage } from "../../../hook/LocationLocalStorage";
 
 const ChatPages = () => {
+  const [chat, setChat] = useState([]);
   const router = useParams();
   const { id } = router;
-  const [chat, setChat] = useState([]);
+  const { fetchPersonalDetails } = useLocationLocalStorage();
+  const user = fetchPersonalDetails();
 
   useEffect(() => {
     const fetchUserChatById = async () => {
-      const authToken = process.env.NEXT_PUBLIC_AUTH_TOKEN;
+      const authToken = user.token;
       const conversationId = id;
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/conversations/${conversationId}`;
       const headers = new Headers({

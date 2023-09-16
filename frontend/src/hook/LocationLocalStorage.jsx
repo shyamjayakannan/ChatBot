@@ -3,7 +3,7 @@ export const useLocationLocalStorage = () => {
     localStorage.setItem("PersonalDetails", JSON.stringify(data));
   };
   const fetchPersonalDetails = () => {
-    const Data = localStorage?.getItem("PersonalDetails");
+    const Data = localStorage.getItem("PersonalDetails");
     const response = JSON.parse(Data);
     return response;
   };

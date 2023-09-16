@@ -7,17 +7,22 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 0.25rem;
+  width: 100%;
 }
 .item {
-  color: #0000ff;
+  color: var(--primary-color);
   font-size: 1.2rem;
   width: 100%;
   padding: 0.5rem;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
 }
 .item:hover {
-  background: #5e5e61;
+  background: var(--gray-dark);
+}
+.items > a {
+  all: unset;
+  width: 100%;
 }
 .item > a {
   all: unset;

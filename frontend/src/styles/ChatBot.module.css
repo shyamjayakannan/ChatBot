@@ -93,7 +93,7 @@
   align-items: flex-end;
 }
 .right > p {
-  color: #0000ff;
+  color: var(--primary-color);
 }
 .right > img {
   width: 310px;

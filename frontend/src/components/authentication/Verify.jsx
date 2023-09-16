@@ -26,6 +26,7 @@ const Verify = () => {
     const response = await Auth({ otp: values.code, number: phone }, "verify");
     if (response == "true") {
       setValues({ code: "", open: true });
+      AuthenticationCtx.setDetails(phone + "_", "", "", "");
       AuthenticationCtx.onHide("VerifyOpen");
     }
   };

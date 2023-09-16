@@ -1,13 +1,16 @@
 "use client";
-import classes from "../../styles/ChatBot.module.css";
 import { useState, useEffect } from "react";
+import classes from "../../styles/ChatBot.module.css";
 import ChatContainer from "./ChatContainer";
 import usecreateConversation from "../../hook/usecreateConversation";
+import { useLocationLocalStorage } from "../../hook/LocationLocalStorage";
 
 const ChatBot = ({ id, chat, setChat }) => {
-  const { create } = usecreateConversation();
   const [notRunFirstTime, setNotRunFirstTime] = useState(2);
   const [ids, setIds] = useState(id == "" ? "" : id);
+  const { create } = usecreateConversation();
+  const { fetchPersonalDetails } = useLocationLocalStorage();
+  const user = fetchPersonalDetails();
 
   useEffect(() => {
     const functioning = async () => {
@@ -22,8 +25,8 @@ const ChatBot = ({ id, chat, setChat }) => {
 
   useEffect(() => {
     const sendUserChatById = async () => {
-      const authToken = process.env.NEXT_PUBLIC_AUTH_TOKEN;
-      const userId = process.env.NEXT_PUBLIC_UID;
+      const authToken = user.token;
+      const userId = user.data.id;
       const conversationId = ids;
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/conversations/${conversationId}/${userId}`;
       const headers = new Headers({

@@ -11,9 +11,9 @@ import Header from "../header/Header";
 const ChatContainer = ({ chat, setChat, id }) => {
   const { answer } = useBot();
   const { fileUpload } = useFileUpload();
+
   const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
   const [file, setFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 

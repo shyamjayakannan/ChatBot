@@ -57,7 +57,7 @@
   padding: 0;
   margin: 0;
   cursor: pointer;
-  color: #0000ff;
+  color: var(--primary-color);
 }
 .part1_left p span {
   color: black;
@@ -94,7 +94,7 @@
   margin-top: 1.75rem;
   font-size: 1.1rem;
   font-weight: 500;
-  color: #5d8ed5;
+  color: var(--primary-color);
   cursor: pointer;
 }
 .continue {
@@ -109,10 +109,10 @@
   font-weight: 600;
   height: 50px;
   padding: 0 2rem;
-  color: #0000ff;
+  color: var(--primary-color);
   letter-spacing: 0;
-  color: #fff;
-  background-color: #0000ff;
+  color: var(--white-color);
+  background-color: var(--primary-color);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   text-transform: uppercase;
 }
