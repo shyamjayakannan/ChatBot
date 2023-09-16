@@ -1,11 +1,8 @@
+"use client";
 import ChatBot from "../components/chatBot/ChatBot";
-import Footer from "../components/footer/Footer";
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <>
-      <ChatBot id={""} />
-      <Footer />
-    </>
-  );
+  const [chat, setChat] = useState([]);
+  return <ChatBot id="" chat={chat} setChat={setChat} />;
 }

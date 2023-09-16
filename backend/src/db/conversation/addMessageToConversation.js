@@ -4,7 +4,8 @@ const ObjectId = require("mongodb").ObjectId;
 module.exports = addMessageToConversation = async (
   messageText,
   userId,
-  conversationId
+  conversationId,
+  isimage
 ) => {
   try {
     const newId = new ObjectId();
@@ -12,6 +13,7 @@ module.exports = addMessageToConversation = async (
       _id: newId,
       text: messageText,
       postedById: userId,
+      isimage: isimage,
     };
     const connection = await getDb();
     await connection.collection("conversations").updateOne(

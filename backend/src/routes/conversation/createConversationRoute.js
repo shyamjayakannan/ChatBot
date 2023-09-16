@@ -5,8 +5,20 @@ module.exports = createConversationRoute = {
   path: "/conversations",
   handler: async (req, res) => {
     try {
-      const { name, memberIds, userId } = req.body;
-      const insertedId = await createConversation(name, [...memberIds, userId]);
+      const { name, userId, chat } = req.body;
+      for (const conversation of chat) {
+        if (conversation.isUser === "false") {
+          conversation.postedById = process.env.CHATBOT_ID;
+        } else {
+          conversation.postedById = userId;
+        }
+      }
+      const newData = chat.map(({ isUser, ...rest }) => rest);
+      const insertedId = await createConversation(
+        name,
+        [process.env.CHATBOT_ID, userId],
+        newData
+      );
       res.status(200).json(insertedId);
     } catch (err) {
       console.log(err.message);

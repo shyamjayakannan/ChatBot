@@ -4,10 +4,13 @@ const useFileUpload = () => {
     formData.append("file", file);
     formData.append("question", question);
     try {
-      const response = await fetch("http://localhost:8501/chatbotimage", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_PYTHON_URL}/chatbotimage`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       const data = await response.json();
       return data;
     } catch (error) {

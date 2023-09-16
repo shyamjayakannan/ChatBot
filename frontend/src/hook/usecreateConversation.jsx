@@ -1,14 +1,15 @@
-const useBot = () => {
-  const answer = async (question) => {
+const usecreateConversation = () => {
+  const create = async (name, chat) => {
+    const userId = process.env.NEXT_PUBLIC_UID;
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_PYTHON_URL}/chatbot`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/conversations`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ question: question }),
+          body: JSON.stringify({ name: name, userId: userId, chat: chat }),
         }
       );
       const data = await response.json();
@@ -18,6 +19,6 @@ const useBot = () => {
       console.log(error);
     }
   };
-  return { answer };
+  return { create };
 };
-export default useBot;
+export default usecreateConversation;

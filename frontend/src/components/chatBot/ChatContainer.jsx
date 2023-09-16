@@ -28,7 +28,7 @@ const ChatContainer = ({ chat, setChat, id }) => {
       setChat((prev) => [
         ...prev,
         {
-          message: [question, selectedImage],
+          text: [question, selectedImage],
           isUser: "true",
           isimage: "true",
         },
@@ -37,7 +37,7 @@ const ChatContainer = ({ chat, setChat, id }) => {
     } else {
       setChat((prev) => [
         ...prev,
-        { message: question, isUser: "true", isimage: "false" },
+        { text: question, isUser: "true", isimage: "false" },
       ]);
       response = await answer(question);
     }
@@ -50,7 +50,7 @@ const ChatContainer = ({ chat, setChat, id }) => {
       setChat((prev) => [
         ...prev,
         {
-          message: response[0].text + response[0].message,
+          text: response[0].text,
           isUser: "false",
           isimage: "false",
         },

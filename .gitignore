@@ -13,3 +13,5 @@ uploads
 backend/.env
 backend/node_modules
 backend/package-lock.json
+
+frontend/.env

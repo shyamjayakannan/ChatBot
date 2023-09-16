@@ -1,4 +1,5 @@
 const getUserConversations = require("../../db/conversation/getUserConversations");
+const getDb = require("../../db/db").getDb;
 
 module.exports = getUserConversationsRoute = {
   method: "get",
@@ -6,7 +7,10 @@ module.exports = getUserConversationsRoute = {
   handler: async (req, res) => {
     try {
       const { id: userId } = req.params;
-      if (req.body.user !== userId) {
+      const connection = await getDb();
+      const user = await connection.collection("users").findOne({ id: userId });
+
+      if (req.headers.authorization !== user.token) {
         return res.status(403).json({
           message: "Users are only allowed to access their own conversations",
         });

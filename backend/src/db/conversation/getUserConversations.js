@@ -7,7 +7,11 @@ module.exports = getUserConversations = async (userId) => {
       .collection("conversations")
       .find({ memberIds: userId })
       .toArray();
-    return conversations;
+    const namesAndIds = conversations.map((item) => ({
+      id: item._id,
+      name: item.name,
+    }));
+    return namesAndIds;
   } catch (err) {
     console.log(err.message);
     throw err;

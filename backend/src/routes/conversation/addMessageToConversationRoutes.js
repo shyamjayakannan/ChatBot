@@ -12,11 +12,18 @@ module.exports = addMessageToConversationRoutes = {
         userId,
         conversationId
       );
-      const text = req.body;
+      const { text } = req.body;
+
+      var id = "";
+      var message = text.text;
+      if (text.isUser == "false") id = process.env.CHATBOT_ID;
+      else id = userId;
+      const isimage = text.isimage;
+
       if (userIsAuthorized) {
-        await addMessageToConversation(text, userId, conversationId);
+        await addMessageToConversation(message, id, conversationId, isimage);
         const updatedConversation = await getConversation(conversationId);
-        res.status(200).json({ messages: updatedConversation.messages });
+        res.status(200).json({ updatedConversation });
       } else {
         res.status(400).json({ error: "You are Authorized!" });
       }

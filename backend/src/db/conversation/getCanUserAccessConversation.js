@@ -1,11 +1,15 @@
-const getConversation = require("./getConversation");
+const getDb = require("../db").getDb;
+const ObjectId = require("mongodb").ObjectId;
 
 module.exports = getCanUserAccessConversation = async (
   userId,
   conversationId
 ) => {
   try {
-    const conversation = await getConversation(conversationId);
+    const connection = await getDb();
+    const conversation = await connection
+      .collection("conversations")
+      .findOne({ _id: new ObjectId(conversationId) });
     return conversation.memberIds.includes(userId);
   } catch (err) {
     console.log(err.message);
