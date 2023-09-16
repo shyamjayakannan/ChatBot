@@ -57,7 +57,7 @@ def load_config(CONFIG_PATH):
         config = yaml.safe_load(f)
     return config 
 
-config = load_config('config.yaml')
+config = load_config('backendPython\config.yaml')
 #_________________________________________________________________________________________
 # Using Splitters
 
