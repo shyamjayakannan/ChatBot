@@ -33,6 +33,11 @@
 .title {
   margin-left: 1rem;
 }
+.right_part {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
 .cross {
   margin-left: auto;
 }

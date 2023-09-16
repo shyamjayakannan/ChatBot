@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import useBot from "../../hook/useBot";
 import classes from "../../styles/ChatBot.module.css";
 import Chat from "./Chat";
-import ChatLogo from "./ChatLogo";
 import Image from "next/image";
 import FileUpload from "../upload/Upload";
 import useFileUpload from "../../hook/useFileUpload";
+import Header from "../header/Header";
 
 const ChatContainer = ({ chat, setChat, id }) => {
   const { answer } = useBot();
@@ -61,12 +61,7 @@ const ChatContainer = ({ chat, setChat, id }) => {
   };
   return (
     <>
-      <div className={classes.header}>
-        <ChatLogo dimL={"50px"} dim={30} />
-        <div className={classes.title}>
-          <h3>Chating Bot {id}</h3>
-        </div>
-      </div>
+      <Header id={id} />
       <div className={classes.chatBotChat}>
         <Chat chat={chat} />
       </div>
