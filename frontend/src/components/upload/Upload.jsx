@@ -32,7 +32,10 @@ const FileUpload = ({ setFile, selectedImage, setSelectedImage }) => {
         {selectedImage && (
           <div
             className={classes.delete}
-            onClick={() => setSelectedImage(null)}
+            onClick={() => {
+              setSelectedImage(null);
+              setFile(null);
+            }}
           >
             X
           </div>

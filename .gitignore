@@ -7,3 +7,11 @@ user_db/chroma.sqlite3
 __pycache__/agents.cpython-311.pyc
 __pycache__/parsers.cpython-311.pyc
 __pycache__/utils.cpython-311.pyc
+__pycache__
+uploads
+
+backend/.env
+backend/node_modules
+backend/package-lock.json
+
+frontend/.env

@@ -3,21 +3,16 @@ const useFileUpload = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("question", question);
-    console.log(formData);
-
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload`,
+        `${process.env.NEXT_PUBLIC_BACKEND_PYTHON_URL}/chatbotimage`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
           body: formData,
         }
       );
-
-      console.log("File uploaded:", response.data.fileUrl);
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error("Error uploading file:", error);
     }

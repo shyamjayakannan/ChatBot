@@ -1,0 +1,29 @@
+.container {
+  padding-top: 1rem;
+}
+.items {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.25rem;
+  width: 100%;
+}
+.item {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.item:hover {
+  background: var(--gray-dark);
+}
+.items > a {
+  all: unset;
+  width: 100%;
+}
+.item > a {
+  all: unset;
+}

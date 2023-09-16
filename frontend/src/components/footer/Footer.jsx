@@ -10,7 +10,7 @@ const Footer = () => {
         fontSize: "1rem",
       }}
     >
-      <div>Made with ❤ © 2023.. Made by shivam6862</div>
+      <div>Made with ❤ © 2023.. Made by us</div>
     </div>
   );
 };

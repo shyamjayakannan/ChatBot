@@ -3,17 +3,17 @@ import React, { useState } from "react";
 import useBot from "../../hook/useBot";
 import classes from "../../styles/ChatBot.module.css";
 import Chat from "./Chat";
-import ChatLogo from "./ChatLogo";
 import Image from "next/image";
 import FileUpload from "../upload/Upload";
 import useFileUpload from "../../hook/useFileUpload";
+import Header from "../header/Header";
 
-const ChatContainer = ({ chat, setChat }) => {
+const ChatContainer = ({ chat, setChat, id }) => {
   const { answer } = useBot();
   const { fileUpload } = useFileUpload();
+
   const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
   const [file, setFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -28,7 +28,7 @@ const ChatContainer = ({ chat, setChat }) => {
       setChat((prev) => [
         ...prev,
         {
-          message: [question, selectedImage],
+          text: [question, selectedImage],
           isUser: "true",
           isimage: "true",
         },
@@ -37,7 +37,7 @@ const ChatContainer = ({ chat, setChat }) => {
     } else {
       setChat((prev) => [
         ...prev,
-        { message: question, isUser: "true", isimage: "false" },
+        { text: question, isUser: "true", isimage: "false" },
       ]);
       response = await answer(question);
     }
@@ -45,11 +45,15 @@ const ChatContainer = ({ chat, setChat }) => {
     setQuestion("");
     setSelectedImage(null);
     setFile(null);
-
+    console.log(response);
     if (response?.length > 0) {
       setChat((prev) => [
         ...prev,
-        { message: response[0].text, isUser: "false", isimage: "false" },
+        {
+          text: response[0].text,
+          isUser: "false",
+          isimage: "false",
+        },
       ]);
     }
 
@@ -57,12 +61,7 @@ const ChatContainer = ({ chat, setChat }) => {
   };
   return (
     <>
-      <div className={classes.header}>
-        <ChatLogo dimL={"50px"} dim={30} />
-        <div className={classes.title}>
-          <h3>Chating Bot</h3>
-        </div>
-      </div>
+      <Header id={id} />
       <div className={classes.chatBotChat}>
         <Chat chat={chat} />
       </div>
