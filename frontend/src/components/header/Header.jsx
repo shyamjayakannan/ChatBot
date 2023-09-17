@@ -3,10 +3,12 @@ import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import classes from "../../styles/ChatBot.module.css";
 import Svgsign from "../../ui/Svgsign";
+import { useRouter } from "next/navigation";
 import { useLocalStorage } from "../../hook/useLocalStorage";
 import AuthenticationContext from "../../store/authentication/Authentication-context";
 
 const Header = ({ id }) => {
+  const router = useRouter();
   const authenticationContextCtx = useContext(AuthenticationContext);
   const { fetchPersonalDetails, removePersonalDetails } = useLocalStorage();
 
@@ -19,6 +21,7 @@ const Header = ({ id }) => {
     removePersonalDetails();
     setUser(null);
     authenticationContextCtx.setDetails("noUser", "", "", "");
+    router.push(`/`);
   };
 
   return (

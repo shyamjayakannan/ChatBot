@@ -2,11 +2,13 @@
 import { useState, useEffect, useContext } from "react";
 import classes from "../../styles/ChatBot.module.css";
 import ChatContainer from "./ChatContainer";
+import { useRouter } from "next/navigation";
 import usecreateConversation from "../../hook/usecreateConversation";
 import AuthenticationContext from "../../store/authentication/Authentication-context";
 import { useSendUserChatById } from "../../hook/useSendUserChatById";
 
-const ChatBot = ({ id, chat, setChat, setRouterVar }) => {
+const ChatBot = ({ id, chat, setChat }) => {
+  const router = useRouter();
   const AuthenticationCtx = useContext(AuthenticationContext);
   const [notRunFirstTime, setNotRunFirstTime] = useState(1);
   const [ids, setIds] = useState(id == "" ? "" : id);
@@ -19,7 +21,7 @@ const ChatBot = ({ id, chat, setChat, setRouterVar }) => {
         if (chat[1].text.length > 25) name = name + "..";
         const newId = await create(name, chat);
         setIds(newId);
-        setRouterVar(newId);
+        router.push(`/chat/${newId}`);
         AuthenticationCtx.setDetails(newId, "", "");
       }
     };
