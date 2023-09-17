@@ -1,6 +1,7 @@
 const getOpt = require("../../db/authentication/getOpt");
 const deleteOtp = require("../../db/authentication/deleteOtp");
 const updateUser = require("../../db/authentication/updateUser");
+const getUser = require("../../db/authentication/getUsers");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -11,6 +12,7 @@ module.exports = insertVerifyRoute = {
     try {
       const { otp, number } = req.body;
       const otpHolder = await getOpt(number);
+      const user = await getUser(number);
       if (otpHolder.length == 0)
         return res
           .status(400)
@@ -20,7 +22,7 @@ module.exports = insertVerifyRoute = {
       if (rightOtpFind.number == req.body.number && validUser) {
         const token = jwt.sign(
           {
-            _id: rightOtpFind._id,
+            _id: user.id,
             number: number,
           },
           process.env.JWT_SECRET_KEY,

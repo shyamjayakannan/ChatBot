@@ -11,9 +11,10 @@
   text-transform: uppercase;
 }
 .item {
+  all: unset;
   color: var(--primary-color);
   font-size: 1.2rem;
-  width: 100%;
+  width: -webkit-fill-available;
   padding: 0.5rem;
   border-radius: 4px;
   cursor: pointer;
@@ -21,13 +22,6 @@
 .item:hover {
   background: #b0b0be;
   opacity: 0.9;
-}
-.items > a {
-  all: unset;
-  width: 100%;
-}
-.item > a {
-  all: unset;
 }
 .active {
   background: #b0b0be;

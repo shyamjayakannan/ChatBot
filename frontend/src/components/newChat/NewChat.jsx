@@ -13,11 +13,13 @@ const NewChat = () => {
   return (
     <div className={classes.container}>
       <div className={classes.items}>
-        <div
+        <Link
+          href={`/`}
           className={`${classes.item} ${"" === pageId ? classes.active : ""}`}
         >
-          <Link href={`/`}>New</Link>
-        </div>
+          New
+        </Link>
+
         {isLoading ? (
           <LoadingSpinner
             minHeight={"30vh"}
@@ -28,15 +30,14 @@ const NewChat = () => {
         ) : (
           <>
             {prevchat.map((item, index) => (
-              <Link href={`/chat/${item.id}`} key={index}>
-                <div
-                  key={index}
-                  className={`${classes.item} ${
-                    item.id === pageId ? classes.active : ""
-                  }`}
-                >
-                  {item.name}
-                </div>
+              <Link
+                href={`/chat/${item.id}`}
+                key={index}
+                className={`${classes.item} ${
+                  item.id === pageId ? classes.active : ""
+                }`}
+              >
+                {item.name}
               </Link>
             ))}
           </>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
-export const useFetchUserChatById = (url, defaultValue) => {
+export const useFetchUserChatById = (conversationId, defaultValue) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(defaultValue);
 
@@ -15,6 +15,10 @@ export const useFetchUserChatById = (url, defaultValue) => {
         setIsLoading(false);
         return;
       }
+
+      const userId = user.data.id;
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/getconversations/${conversationId}/${userId}`;
+
       const authToken = user.token;
       const headers = new Headers({
         Authorization: `${authToken}`,

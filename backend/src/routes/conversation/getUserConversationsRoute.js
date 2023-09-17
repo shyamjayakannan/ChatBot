@@ -1,5 +1,5 @@
 const getUserConversations = require("../../db/conversation/getUserConversations");
-const getDb = require("../../db/db").getDb;
+const getToken = require("../../db/conversation/getUserToken");
 
 module.exports = getUserConversationsRoute = {
   method: "get",
@@ -7,10 +7,9 @@ module.exports = getUserConversationsRoute = {
   handler: async (req, res) => {
     try {
       const { id: userId } = req.params;
-      const connection = await getDb();
-      const user = await connection.collection("users").findOne({ id: userId });
+      const token = await getToken(userId);
 
-      if (req.headers.authorization !== user.token) {
+      if (req.headers.authorization !== token) {
         return res.status(403).json([
           {
             id: "null",
