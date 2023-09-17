@@ -1,7 +1,7 @@
 import React from "react";
+import Image from "next/image";
 import classes from "../../styles/ChatBot.module.css";
 import ChatLogo from "./ChatLogo";
-import Image from "next/image";
 
 const ChatItem = ({ data }) => {
   return (
@@ -24,7 +24,7 @@ const ChatItem = ({ data }) => {
       ) : (
         <div className={classes.left}>
           <div className={classes.avatar}>
-            <ChatLogo dimL={"20px"} dim={13} />
+            <ChatLogo dimL={"22px"} dim={14} />
             <p>Chating Bot</p>
           </div>
           <div className={classes["chat-left"]}>{data.text}</div>

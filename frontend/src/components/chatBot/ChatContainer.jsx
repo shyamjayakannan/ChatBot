@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import useBot from "../../hook/useBot";
 import classes from "../../styles/ChatBot.module.css";
-import Chat from "./Chat";
 import Image from "next/image";
+import Header from "../header/Header";
+import useBot from "../../hook/useBot";
+import Chat from "./Chat";
 import FileUpload from "../upload/Upload";
 import useFileUpload from "../../hook/useFileUpload";
-import Header from "../header/Header";
 
 const ChatContainer = ({ chat, setChat, id }) => {
   const { answer } = useBot();

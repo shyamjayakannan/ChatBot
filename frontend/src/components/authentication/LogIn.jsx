@@ -55,7 +55,7 @@ const LogIn = () => {
             <div className={classes.underline}> </div>
           </div>
           <div className={classes.part1_right}>
-            <Image src={"/chat.png"} width={75} height={75} alt="logo" />
+            <Image src={"/logo.jpg"} width={75} height={75} alt="logo" />
           </div>
         </div>
         <div className={classes.form}>

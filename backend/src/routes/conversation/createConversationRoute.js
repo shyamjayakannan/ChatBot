@@ -1,4 +1,5 @@
 const createConversation = require("../../db/conversation/createConversation");
+const ObjectId = require("mongodb").ObjectId;
 
 module.exports = createConversationRoute = {
   method: "post",
@@ -7,11 +8,13 @@ module.exports = createConversationRoute = {
     try {
       const { name, userId, chat } = req.body;
       for (const conversation of chat) {
+        const newId = new ObjectId();
         if (conversation.isUser === "false") {
           conversation.postedById = process.env.CHATBOT_ID;
         } else {
           conversation.postedById = userId;
         }
+        conversation._id = newId;
       }
       const newData = chat.map(({ isUser, ...rest }) => rest);
       const insertedId = await createConversation(
