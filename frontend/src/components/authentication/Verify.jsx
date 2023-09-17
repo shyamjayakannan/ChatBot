@@ -59,7 +59,7 @@ const Verify = () => {
             <div className={classes.underline}> </div>
           </div>
           <div className={classes.part1_right}>
-            <Image src={"/chat.png"} width={75} height={75} alt="logo" />
+            <Image src={"/logo.jpg"} width={75} height={75} alt="logo" />
           </div>
         </div>
         <div className={classes.form}>
@@ -71,11 +71,7 @@ const Verify = () => {
             onChange={handleChange("code")}
           />
         </div>
-        <div
-          className={classes.continue}
-          onClick={submit}
-          style={{ margin: "1rem auto" }}
-        >
+        <div className={classes.continue} onClick={submit}>
           <a>VERIFY OTP</a>
         </div>
         <div className={classes.privacy_policy}>

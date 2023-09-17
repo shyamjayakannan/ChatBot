@@ -1,4 +1,4 @@
-export const useLocationLocalStorage = () => {
+export const useLocalStorage = () => {
   const updatePersonalDetails = (data) => {
     localStorage.setItem("PersonalDetails", JSON.stringify(data));
   };
