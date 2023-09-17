@@ -4,7 +4,7 @@ const getConversation = require("../../db/conversation/getConversation");
 
 module.exports = addMessageToConversationRoutes = {
   method: "post",
-  path: "/conversations/:conversationId/:userId",
+  path: "/addconversations/:conversationId/:userId",
   handler: async (req, res) => {
     try {
       const { userId, conversationId } = req.params;
@@ -27,7 +27,7 @@ module.exports = addMessageToConversationRoutes = {
       } else {
         res
           .status(400)
-          .json({ error: "You are Authorized!", conversation: [] });
+          .json({ error: "You are not Authorized!", conversation: [] });
       }
     } catch (err) {
       console.log(err.message);

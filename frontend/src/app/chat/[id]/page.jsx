@@ -13,10 +13,7 @@ const ChatPages = () => {
     isLoading,
     data: chat,
     setData: setChat,
-  } = useFetchUserChatById(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/conversations/${conversationId}`,
-    []
-  );
+  } = useFetchUserChatById(conversationId, []);
 
   if (isLoading)
     return (

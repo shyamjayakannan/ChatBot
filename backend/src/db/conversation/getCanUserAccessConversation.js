@@ -10,6 +10,8 @@ module.exports = getCanUserAccessConversation = async (
     const conversation = await connection
       .collection("conversations")
       .findOne({ _id: new ObjectId(conversationId) });
+
+    if (conversation == null) return "Data not Found";
     return conversation.memberIds.includes(userId);
   } catch (err) {
     console.log(err.message);

@@ -15,7 +15,8 @@ const ChatBot = ({ id, chat, setChat, setRouterVar }) => {
   useEffect(() => {
     const functioning = async () => {
       if (ids == "" && chat.length == 2) {
-        const name = chat[1].text.substr(0, 25);
+        var name = chat[1].text.substr(0, 25);
+        if (chat[1].text.length > 25) name = name + "..";
         const newId = await create(name, chat);
         setIds(newId);
         setRouterVar(newId);

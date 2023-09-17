@@ -5,7 +5,7 @@ export const useSendUserChatById = async (conversationId, chat) => {
   const user = fetchPersonalDetails();
   const userId = user.data.id;
   const authToken = user.token;
-  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/conversations/${conversationId}/${userId}`;
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/addconversations/${conversationId}/${userId}`;
 
   const headers = new Headers({
     Authorization: `${authToken}`,
