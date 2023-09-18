@@ -1,20 +1,17 @@
 from chromadb.api.types import Documents, Embeddings
-import google.generativeai as palm
 from typing import List, Tuple
 from langchain.docstore.document import Document
-import os
+from newspaper import Article 
+import requests
 from langchain.vectorstores import Chroma
 import yaml
 from langchain.document_loaders import PyPDFLoader
 from langchain.document_loaders import Docx2txtLoader
 from langchain.text_splitter import SpacyTextSplitter, RecursiveCharacterTextSplitter
-from langchain.llms import GooglePalm
-from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv()) # read local .env file
-
-
-llm = GooglePalm(temperature=0.2)
-palm.configure(api_key=os.environ['GOOGLE_API_KEY_PALM'])
+import os, sys
+sys.path.append(os.getcwd())
+from backendPython.llms import *
+from backendPython.agents import *
 
 models = [m for m in palm.list_models() if 'embedText' in m.supported_generation_methods]
 model = models[0]
@@ -35,21 +32,7 @@ class Embedding:
             
 #_________________________________________________________________________________________
 # Text Loading
-def load_data(path):
-    type = path.split('.')[-1]
-    if type == 'txt':
-      with open(path, 'r') as f:
-        docs = f.read()
-        f.close()
-      return docs
-    elif type == 'pdf':
-      document_loader = PyPDFLoader(file_path=path)
-      document = document_loader.load_and_split()
-      return document
-    elif type == 'docx':
-      loader = Docx2txtLoader("example_data/fake.docx")
-      data = loader.load()
-      return data
+
 
 #_________________________________________________________________________________________
 def load_config(CONFIG_PATH):
@@ -59,31 +42,101 @@ def load_config(CONFIG_PATH):
 
 config = load_config('backendPython\config.yaml')
 #_________________________________________________________________________________________
-# Using Splitters
 
-def split_data(data):
+class GetText:
+  def __init__(self , documents:List[dict] , db_path:str):
+    self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=16, length_function=len,)
+    self.documents = documents
+    self.db = Chroma(embedding_function = Embedding(), persist_directory= db_path)
+    # self.db.from_texts(texts=['Hare Krishna'],embedding_function = Embedding(),metadatas= [{'title': 'Hare Krishna'}])
 
-  # text_splitter = RecursiveCharacterTextSplitter(
-  #   chunk_size= config['chunk_size'], 
-  #   chunk_overlap= config['chunk_overlap'],
-  #   length_function=len,
-  # )
-  # Instantiate the SpacyTextSplitter with the desired chunk size
-  text_splitter = SpacyTextSplitter(chunk_size=1000, chunk_overlap=20)
 
-  # Split the text using SpacyTextSplitter
-  texts = text_splitter.split_text(data)
-  return texts
+  def __load_data__(self, web_path , path)->List[dict]:
+    type = path.split('.')[-1]
 
-#_________________________________________________________________________________________
+    title = None
+    result = []    # to store list of dict of {text , metadata}
+    if type == 'pdf':
+      document_loader = PyPDFLoader(file_path=path)
+      docs = document_loader.load()
+    elif type == 'docx':
+      loader = Docx2txtLoader(file_path=path)
+      docs = loader.load()
 
-def create_db(data):
-  embedder = Embedding()
-  db = Chroma.from_documents(data, embedder, persist_directory='./user_db')
-  return
+    else :
+      title , text = self.__web_scraping__(path)
+      if title is None :
+        return None
+      docs = [Document(page_content=text , metadata={'title':title})]
 
-#_________________________________________________________________________________________
-def search_db(query)-> List[Tuple[Document, float]]:
-   db = Chroma(embedding_function= Embedding(), persist_directory='./user_db')
-   results = db.similarity_search_with_score(query)
-   return results
+    for doc in docs:
+      texts = self.text_splitter.split_text(doc.page_content)
+
+      for text in texts:
+        metadata = self.__get_metadata__(web_path , text)  
+        if 'page' not in doc.metadata:
+          metadata['page'] = -1
+        else :
+          metadata['page'] = doc.metadata['page']
+        result.append({'text':text , 'metadata':metadata})
+    
+    return result
+      
+
+
+  def __get_metadata__(self, path , text)->dict:
+    # summary , path_url , title , keywords
+    metadata = {}
+    metadata['source'] = path
+    metadata['title'] = title_chain.run(text)
+
+    metadata['summary'] = short_summary_chain.run(text)
+    return metadata
+  
+
+  def __web_scraping__(self, url):
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36'
+            }
+    session = requests.Session()
+
+    try:
+      response = session.get(url, headers=headers, timeout=10)
+    
+      if response.status_code == 200:     # the request was successful
+        article = Article(url)
+        article.download()
+        article.parse()
+        
+        print('All fetching successful!', end= '\n\n\n')
+        return article.title , article.text
+      else:
+        print(f"Failed to fetch article at {url}")
+    except Exception as e:
+      print(f"Error occurred while fetching article at {url}: {e}") 
+    
+    return None , None
+  
+  def create_vectorestore(self):
+
+    print('Entered create_vectorestore...\n\n')
+    for idx, dict_1 in enumerate(self.documents):
+
+      local_path = dict_1['local_path']
+      web_path = dict_1['web_path']
+      print(f'Loading doc:{idx+1}' , end ='  ')
+
+      
+      x = self.__load_data__(web_path, local_path)
+      texts = []
+      meta = []
+      print('Appending to list...', end= '  ')
+      for dict_2 in x:
+        texts.append(dict_2['text'])
+        meta.append(dict_2['metadata'])
+        
+      self.db.add_texts(texts, meta)
+      print(u'\u2705')
+
+    
+

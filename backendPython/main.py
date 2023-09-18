@@ -3,11 +3,12 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from agents import *
 import os
+from q_a import *
 
 app = Flask(__name__)
 
 CORS(app)
-
+db_retriver = DB_Query('backendPython/info_db')
 
 UPLOAD_FOLDER = 'backendPython/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -19,9 +20,8 @@ def chatbot():
         user_input = request.json.get('question')
         if user_input:
             print(user_input)
-            output = agent_chain.run(user_input)
-            # output = user_input
-            # print('\n\n From DataBase : \n', output['source_documents'])
+            output = db_retriver.run(user_input)
+           
             response_obj = [{
                 "text": output
             }]
