@@ -8,7 +8,7 @@ export default function HomeTitle() {
 
     useEffect(() => {
         function callback(intersectionRatio, element) {
-            const scale = 3.5;
+            const scale = 3;
             element.style.opacity = 1 - intersectionRatio * scale;
         }
 
@@ -19,9 +19,12 @@ export default function HomeTitle() {
 
     return (
         <section ref={element} className={classes.section}>
-            <h1>Knowledge at you doorstep</h1>
-            <p>Knowledge at you doorstep</p>
-            <a>Try Now</a>
+            <div className={classes.shape}></div>
+            <div className={classes.content}>
+                <h1>Knowledge at you doorstep</h1>
+                <p>Knowledge at you doorstep</p>
+                <a>Try Now</a>
+            </div>
         </section>
     );
 };
