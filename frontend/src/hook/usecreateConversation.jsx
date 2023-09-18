@@ -1,7 +1,7 @@
-import { useLocationLocalStorage } from "./LocationLocalStorage";
+import { useLocalStorage } from "./useLocalStorage";
 
 const usecreateConversation = () => {
-  const { fetchPersonalDetails } = useLocationLocalStorage();
+  const { fetchPersonalDetails } = useLocalStorage();
   const create = async (name, chat) => {
     const userId = fetchPersonalDetails().data.id;
     try {

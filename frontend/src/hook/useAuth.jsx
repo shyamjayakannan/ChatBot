@@ -1,8 +1,8 @@
-import { useLocationLocalStorage } from "./LocationLocalStorage";
+import { useLocalStorage } from "./useLocalStorage";
 import { useNotification } from "./useNotification";
 
 const useAuth = () => {
-  const { updatePersonalDetails } = useLocationLocalStorage();
+  const { updatePersonalDetails } = useLocalStorage();
   const { NotificationHandler } = useNotification();
   const Auth = async (data, type) => {
     try {

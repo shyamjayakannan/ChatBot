@@ -1,48 +1,47 @@
 "use client";
 import classes from "../../styles/newChat.module.css";
-import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import { useLocationLocalStorage } from "../../hook/LocationLocalStorage";
-import AuthenticationContext from "../../store/authentication/Authentication-context";
+import LoadingSpinner from "../../ui/LoadingSpinner";
+import { usePathname } from "next/navigation";
+import { useFetchUserPrevChatLink } from "../../hook/useFetchUserPrevChatLink";
 
 const NewChat = () => {
-  const [prevchat, setPrevchat] = useState([]);
-  const authenticationContextCtx = useContext(AuthenticationContext);
-  const { fetchPersonalDetails } = useLocationLocalStorage();
-  const user = fetchPersonalDetails();
-
-  useEffect(() => {
-    const fetchUserPrevChat = async () => {
-      const uid = user.data.id;
-      const authToken = user.token;
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${uid}/conversations`;
-      const headers = new Headers({
-        Authorization: `${authToken}`,
-        "Content-Type": "application/json",
-      });
-      const response = await fetch(url, {
-        method: "GET",
-        headers: headers,
-      });
-      const data = await response.json();
-      setPrevchat(data);
-    };
-    if (user != null || user != undefined) fetchUserPrevChat();
-  }, [authenticationContextCtx.details.phone]);
+  const pathname = usePathname();
+  const { isLoading, data: prevchat } = useFetchUserPrevChatLink([]);
+  const pageId = pathname.substring(6);
 
   return (
     <div className={classes.container}>
       <div className={classes.items}>
-        <div className={classes.item}>
-          <Link href={`/`}>New</Link>
-        </div>
-        {prevchat.map((item, index) => (
-          <Link href={`/chat/${item.id}`} key={index}>
-            <div key={index} className={classes.item}>
-              {item.name}
-            </div>
-          </Link>
-        ))}
+        <Link
+          href={`/`}
+          className={`${classes.item} ${"" === pageId ? classes.active : ""}`}
+        >
+          New
+        </Link>
+
+        {isLoading ? (
+          <LoadingSpinner
+            minHeight={"30vh"}
+            width={"40px"}
+            height={"40px"}
+            border={"4"}
+          />
+        ) : (
+          <>
+            {prevchat.map((item, index) => (
+              <Link
+                href={`/chat/${item.id}`}
+                key={index}
+                className={`${classes.item} ${
+                  item.id === pageId ? classes.active : ""
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
