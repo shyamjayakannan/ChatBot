@@ -24,9 +24,9 @@ export default function RootLayout({ children }) {
                 flexDirection: "row",
               }}
             >
-              <div style={{ flex: "1" }}>
+              {/* <div style={{ flex: "1" }}>
                 <NewChat />
-              </div>
+              </div> */}
               <div style={{ flex: "4" }}>{children}</div>
             </div>
             <Footer />

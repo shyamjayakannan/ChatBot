@@ -1,0 +1,24 @@
+.section {
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.left {
+    flex: 1;
+    font-size: 2rem;
+    max-height: 100vh;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right {
+    flex: 3;
+    display: grid;
+    row-gap: 50vh;
+    font-size: 3rem;
+}
