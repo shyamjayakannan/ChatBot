@@ -1,0 +1,66 @@
+.main {
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main > * {
+    z-index: inherit;
+}
+
+.dark-theme {
+    background-color: var(--black-color);
+    color: var(--white-light-color);
+}
+
+.main ul {
+    position: relative;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+}
+
+.main ul li {
+    margin: 0 2rem;
+}
+
+.main > input {
+    display: none;
+}
+
+.main > label {
+    background-color: var(--white-light-color);
+    cursor: pointer;
+    height: 15px;
+    width: 50px;
+    border-radius: 10px;
+    border: 1.5px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.main > label div {
+    position: relative;
+    left: -32.5%;
+    border: 1.5px solid black;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: var(--white-light-color);
+    transition: 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main > input:checked + label > div {
+    transform: translate(50px);
+}
