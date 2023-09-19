@@ -18,7 +18,6 @@ const SignUP = () => {
     open: false,
     error: "",
   });
-  const [referral, setReferral] = useState(false);
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -70,7 +69,7 @@ const SignUP = () => {
             <div className={classes.underline}> </div>
           </div>
           <div className={classes.part1_right}>
-            <Image src={"/chat.png"} width={75} height={75} alt="logo" />
+            <Image src={"/logo.jpg"} width={75} height={75} alt="logo" />
           </div>
         </div>
         <div className={classes.form}>
@@ -92,29 +91,7 @@ const SignUP = () => {
             value={values.email}
             onChange={handleChange("email")}
           />
-          {referral ? (
-            <input
-              type="text"
-              placeholder="Referral Code"
-              value={values.referralCode}
-              onChange={handleChange("referralCode")}
-            />
-          ) : (
-            <></>
-          )}
         </div>
-        {referral == false ? (
-          <div
-            className={classes.referral}
-            onClick={() => {
-              setReferral(true);
-            }}
-          >
-            Have a referral code?
-          </div>
-        ) : (
-          <></>
-        )}
         <div
           className={classes.continue}
           onClick={(e) => {

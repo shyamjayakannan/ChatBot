@@ -16,3 +16,4 @@ backend/package-lock.json
 
 frontend/.env
 backendPython/.env
+data

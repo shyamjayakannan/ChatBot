@@ -1,33 +1,22 @@
 from langchain.agents import AgentType
 from langchain.agents import Tool
-from utils import *
+import os, sys
+sys.path.append(os.getcwd())
+from backendPython.prompts import *
+from backendPython.llms import *
+from backendPython.parsers import *
 from langchain.utilities import GoogleSearchAPIWrapper
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 from langchain.agents import initialize_agent
-from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-from parsers import *
 from langchain.memory import ConversationBufferMemory
 
 wolfram = WolframAlphaAPIWrapper()
 search = GoogleSearchAPIWrapper()
 
-
-summary_template= ''''
-Write a summary of the following text in bulleted points: 
-Format Instructions:
-{format_instructions}
-
-Query : 
-{query}
-
-''' 
-summary_prompt = PromptTemplate(
-    input_variables=["query"],
-    template=summary_template,
-    partial_variables={"format_instructions": summary_parser.get_format_instructions()}
-)
 summarize_chain = LLMChain(llm=llm, prompt=summary_prompt)
+short_summary_chain = LLMChain(llm=llm, prompt=short_summary_prompt)
+title_chain = LLMChain(llm=llm, prompt=title_prompt)
 
 tools = [
     Tool(
@@ -40,22 +29,16 @@ tools = [
     description="To do calculations.",  
     func=wolfram.run,  
     ),
-    Tool(
-       name='Summarizer',
-       func=summarize_chain.run,
-       description='useful for summarizing texts'
-    )
 ]
 
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
-
 agent_chain  = initialize_agent(tools,  
                          llm,  
                          agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, 
-                        #  verbose=True, 
+                         verbose=True, 
                          max_iterations=6,
-                         memory=memory
+                         memory=memory,                         
                          )
 
-# print(agent_chain.run("What is the capital of India?"))
+# print(agent_chain.run("what are fundamental rights? Explain at length."))

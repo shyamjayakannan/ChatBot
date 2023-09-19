@@ -1,41 +1,46 @@
 "use client";
+import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
-import ChatLogo from "../chatBot/ChatLogo";
 import classes from "../../styles/ChatBot.module.css";
-import AuthenticationContext from "../../store/authentication/Authentication-context";
 import Svgsign from "../../ui/Svgsign";
-import { useLocationLocalStorage } from "../../hook/LocationLocalStorage";
+import { useRouter } from "next/navigation";
+import { useLocalStorage } from "../../hook/useLocalStorage";
+import AuthenticationContext from "../../store/authentication/Authentication-context";
 
 const Header = ({ id }) => {
+  const router = useRouter();
   const authenticationContextCtx = useContext(AuthenticationContext);
-  const { fetchPersonalDetails, removePersonalDetails } =
-    useLocationLocalStorage();
+  const { fetchPersonalDetails, removePersonalDetails } = useLocalStorage();
 
   const [user, setUser] = useState(null);
   useEffect(() => {
     setUser(fetchPersonalDetails());
   }, [authenticationContextCtx.details.phone]);
 
+  const logOutHandler = () => {
+    removePersonalDetails();
+    setUser(null);
+    authenticationContextCtx.setDetails("noUser", "", "", "");
+    router.push(`/`);
+  };
+
   return (
     <div className={classes.header}>
-      <ChatLogo dimL={"50px"} dim={30} />
+      <Image src="/logo.jpg" width={50} height={50} alt="chat" />
       <div className={classes.title}>
-        <h3>Chating Bot {id}</h3>
-        <div
-          className={classes.right_part}
-          onClick={() => {
-            if (user == null || user == undefined)
-              authenticationContextCtx.onShow("LogInOpen");
-            else {
-              removePersonalDetails();
-              setUser(null);
-            }
-          }}
-        >
+        <h3>Chat Bot {id}</h3>
+        <div className={classes.right_part}>
           <div className={classes.right_image}>
             <Svgsign />
           </div>
-          <div className={`${classes.right_text}`}>
+          <div
+            className={`${classes.right_text}`}
+            onClick={() => {
+              if (user == null || user == undefined)
+                authenticationContextCtx.onShow("LogInOpen");
+              else logOutHandler();
+            }}
+          >
             {user?.token ? "Log out" : "Sign In"}
           </div>
         </div>
