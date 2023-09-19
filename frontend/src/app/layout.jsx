@@ -8,31 +8,41 @@ import Auth from "../components/authentication/Auth";
 import Notifications from "../components/notification/Notifications";
 import { AuthenticationContextProvider } from "../store/authentication/Authentication-context";
 import { NotificationContextProvider } from "../store/notification/Notification-context";
+import { ThemeContextProvider } from "../store/theme/Theme-context";
+
+/* 
+  next first runs server-side and window is undefined server-side.
+  so run it only when it runs the DOM in frontend when it is defined
+*/
+// load page at top
+if (typeof window !== "undefined") window.history.scrollRestoration = "manual";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <meta name="viewport" content="initial-scale=1, width=device-width" />
       <body className={inter.className}>
-        <NotificationContextProvider>
-          <AuthenticationContextProvider>
-            <Notifications />
-            <Auth />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              {/* <div style={{ flex: "1" }}>
+        <ThemeContextProvider>
+          <NotificationContextProvider>
+            <AuthenticationContextProvider>
+              <Notifications />
+              <Auth />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                {/* <div style={{ flex: "1" }}>
                 <NewChat />
               </div> */}
-              <div style={{ flex: "4" }}>{children}</div>
-            </div>
-            <Footer />
-            <Script />
-          </AuthenticationContextProvider>
-        </NotificationContextProvider>
+                <div style={{ flex: "4" }}>{children}</div>
+              </div>
+              <Footer />
+              <Script />
+            </AuthenticationContextProvider>
+          </NotificationContextProvider>
+        </ThemeContextProvider>
       </body>
     </html>
   );

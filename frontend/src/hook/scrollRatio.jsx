@@ -1,13 +1,19 @@
-export default function ScrollRatio(callback, element) {
-    let el = element;
-    let h = 0;
+"use client";
 
-    while (el) {
-        h += el.offsetTop;
-        el = el.offsetParent;
-    }
+import { useEffect } from "react";
 
-    const listener = document.addEventListener("scroll", () => callback((window.scrollY - h) / element.scrollHeight, element));
+export default function useScrollRatio(callback, element) {
+    useEffect(() => {
+        let el = element;
+        let h = 0;
 
-    return () => removeEventListener("scroll", listener);
+        while (el) {
+            h += el.offsetTop;
+            el = el.offsetParent;
+        }
+
+        const listener = document.addEventListener("scroll", () => callback(h));
+
+        return () => removeEventListener("scroll", listener);
+    }, []);
 }
