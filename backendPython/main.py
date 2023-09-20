@@ -21,7 +21,7 @@ def chatbot():
         if user_input:
             print(user_input)
             output = db_retriver.run(user_input)
-           
+
             response_obj = [{
                 "text": output
             }]

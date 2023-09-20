@@ -1,6 +1,6 @@
 const getDb = require("../db").getDb;
 
-module.exports = getUser = async (userId) => {
+module.exports = getUserToken = async (userId) => {
   try {
     const connection = await getDb();
     const user = await connection.collection("users").findOne({ id: userId });
@@ -8,7 +8,7 @@ module.exports = getUser = async (userId) => {
     if (user) return user.token;
     else null;
   } catch (err) {
-    console.log(err.message);
+    console.log("getUser " + err.message);
     throw err;
   }
 };

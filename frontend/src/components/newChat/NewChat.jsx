@@ -1,24 +1,27 @@
 "use client";
 import classes from "../../styles/newChat.module.css";
-import Link from "next/link";
 import LoadingSpinner from "../../ui/LoadingSpinner";
-import { usePathname } from "next/navigation";
+import { v4 } from "uuid";
 import { useFetchUserPrevChatLink } from "../../hook/useFetchUserPrevChatLink";
 
-const NewChat = () => {
-  const pathname = usePathname();
+const NewChat = ({ setConversationId, conversationId, setInitialRender }) => {
   const { isLoading, data: prevchat } = useFetchUserPrevChatLink([]);
-  const pageId = pathname.substring(6);
 
   return (
     <div className={classes.container}>
       <div className={classes.items}>
-        <Link
-          href={`/`}
-          className={`${classes.item} ${"" === pageId ? classes.active : ""}`}
+        <div
+          className={`${classes.item} ${
+            "new" === conversationId.substr(0, 3) ? classes.active : ""
+          }`}
+          onClick={() => {
+            if (conversationId.substr(0, 3) == "new") return;
+            setConversationId("new" + v4());
+            setInitialRender(true);
+          }}
         >
           New
-        </Link>
+        </div>
 
         {isLoading ? (
           <LoadingSpinner
@@ -30,15 +33,18 @@ const NewChat = () => {
         ) : (
           <>
             {prevchat.map((item, index) => (
-              <Link
-                href={`/chat/${item.id}`}
+              <div
                 key={index}
+                id={item.id}
                 className={`${classes.item} ${
-                  item.id === pageId ? classes.active : ""
+                  item.id === conversationId ? classes.active : ""
                 }`}
+                onClick={(e) => {
+                  setConversationId(e.target.getAttribute("id"));
+                }}
               >
                 {item.name}
-              </Link>
+              </div>
             ))}
           </>
         )}

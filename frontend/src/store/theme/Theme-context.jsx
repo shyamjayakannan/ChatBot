@@ -1,25 +1,25 @@
 "use client";
 
 import React, { useState } from "react";
-import { useLocationLocalStorage } from "../../hook/LocationLocalStorage";
+import { useLocalStorage } from "../../hook/useLocalStorage";
 
 const ThemeContext = React.createContext({
-    theme: false,
-    toggleTheme: () => { },
+  theme: false,
+  toggleTheme: () => {},
 });
 
 export function ThemeContextProvider(props) {
-    const [theme, setTheme] = useState(false);
-    
-    function toggleThemeHandler() {
-        setTheme(theme => !theme);
-    }
+  const [theme, setTheme] = useState(false);
 
-    return (
-        <ThemeContext.Provider value={{ theme, toggleTheme: toggleThemeHandler }}>
-            {props.children}
-        </ThemeContext.Provider>
-    );
+  function toggleThemeHandler() {
+    setTheme((theme) => !theme);
+  }
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme: toggleThemeHandler }}>
+      {props.children}
+    </ThemeContext.Provider>
+  );
 }
 
 export default ThemeContext;

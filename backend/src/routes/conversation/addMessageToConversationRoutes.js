@@ -30,7 +30,7 @@ module.exports = addMessageToConversationRoutes = {
           .json({ error: "You are not Authorized!", conversation: [] });
       }
     } catch (err) {
-      console.log(err.message);
+      console.log("addMessageToConversationRoutes " + err.message);
       return res.status(400).send({
         error: "Server Error!",
         messages: [],

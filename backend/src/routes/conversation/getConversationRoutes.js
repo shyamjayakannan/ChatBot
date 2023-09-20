@@ -45,7 +45,7 @@ module.exports = getConversationRoutes = {
         conversation,
       });
     } catch (err) {
-      console.log(err.message);
+      console.log("getConversationRoutes " + err.message);
       return res.status(400).send({
         error: "Server Error!",
         conversation: [],
