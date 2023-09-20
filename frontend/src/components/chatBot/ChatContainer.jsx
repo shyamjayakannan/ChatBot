@@ -39,7 +39,7 @@ const ChatContainer = ({ chat, setChat, id }) => {
         ...prev,
         { text: question, isUser: "true", isimage: "false" },
       ]);
-      response = await answer(question);
+      response = await answer(question, id);
     }
 
     setQuestion("");

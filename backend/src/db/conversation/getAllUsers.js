@@ -13,7 +13,7 @@ module.exports = getAllUsers = async () => {
     });
     return filteredUsers;
   } catch (err) {
-    console.log(err.message);
+    console.log("getAllUsers " + err.message);
     throw err;
   }
 };

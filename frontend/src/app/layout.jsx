@@ -5,7 +5,6 @@ import { Oxanium } from "next/font/google";
 const oxanium = Oxanium({ subsets: ["latin"] });
 import Script from "next/script";
 import Footer from "../components/footer/Footer";
-import NewChat from "../components/newChat/NewChat";
 import Auth from "../components/authentication/Auth";
 import Notifications from "../components/notification/Notifications";
 import { AuthenticationContextProvider } from "../store/authentication/Authentication-context";
@@ -35,17 +34,7 @@ export default function RootLayout({ children }) {
             <AuthenticationContextProvider>
               <Notifications />
               <Auth />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
-                {/* <div style={{ flex: "1" }}>
-                <NewChat />
-              </div> */}
-                <div style={{ flex: "4" }}>{children}</div>
-              </div>
+              {children}
               <Footer />
               <Script />
             </AuthenticationContextProvider>

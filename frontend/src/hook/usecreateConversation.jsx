@@ -2,7 +2,7 @@ import { useLocalStorage } from "./useLocalStorage";
 
 const usecreateConversation = () => {
   const { fetchPersonalDetails } = useLocalStorage();
-  const create = async (name, chat) => {
+  const create = async (name, chat, conversationId) => {
     const userId = fetchPersonalDetails().data.id;
     try {
       const response = await fetch(
@@ -12,7 +12,12 @@ const usecreateConversation = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name: name, userId: userId, chat: chat }),
+          body: JSON.stringify({
+            name: name,
+            userId: userId,
+            chat: chat,
+            conversationId: conversationId,
+          }),
         }
       );
       const data = await response.json();

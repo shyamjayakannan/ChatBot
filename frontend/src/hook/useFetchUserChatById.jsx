@@ -16,6 +16,12 @@ export const useFetchUserChatById = (conversationId, defaultValue) => {
         return;
       }
 
+      if (conversationId.substr(0, 3) == "new") {
+        setData(defaultValue);
+        setIsLoading(false);
+        return;
+      }
+
       const userId = user.data.id;
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/getconversations/${conversationId}/${userId}`;
 
@@ -35,7 +41,7 @@ export const useFetchUserChatById = (conversationId, defaultValue) => {
       setIsLoading(false);
     };
     loadResources();
-  }, []);
+  }, [conversationId]);
 
   return { isLoading, data, setData };
 };
