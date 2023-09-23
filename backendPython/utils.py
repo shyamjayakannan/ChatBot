@@ -11,8 +11,7 @@ from langchain.text_splitter import SpacyTextSplitter, RecursiveCharacterTextSpl
 import os, sys
 sys.path.append(os.getcwd())
 from backendPython.llms import *
-from backendPython.agents import *
-
+from chains import *
 models = [m for m in palm.list_models() if 'embedText' in m.supported_generation_methods]
 model = models[0]
 
@@ -48,7 +47,8 @@ class GetText:
     self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=16, length_function=len,)
     self.documents = documents
     self.db = Chroma(embedding_function = Embedding(), persist_directory= db_path)
-    # self.db.from_texts(texts=['Hare Krishna'],embedding_function = Embedding(),metadatas= [{'title': 'Hare Krishna'}])
+    self.ct = 0
+    self.db.from_texts(texts=['Hare Krishna'],embedding_function = Embedding(),metadatas= [{'title': 'Hare Krishna'}])
 
 
   def __load_data__(self, web_path , path)->List[dict]:
@@ -88,9 +88,20 @@ class GetText:
     # summary , path_url , title , keywords
     metadata = {}
     metadata['source'] = path
-    metadata['title'] = title_chain.run(text)
 
-    metadata['summary'] = short_summary_chain.run(text)
+    try:
+      metadata['title'] = title_chain.run(text)
+    except Exception as e:
+      metadata['title'] = "No title found"
+      self.ct+=1
+      print(self.ct)
+    
+    try:
+      metadata['summary'] = short_summary_chain.run(text)
+    except Exception as e:
+      metadata['summary'] = "No summary found"
+      self.ct+=1
+      print(self.ct)
     return metadata
   
 

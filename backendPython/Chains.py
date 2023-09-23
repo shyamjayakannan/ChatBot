@@ -2,28 +2,15 @@ from utils import llm
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import RetrievalQAWithSourcesChain
-from agents import *
+from langchain.chains import LLMChain
+from prompts import *
+
+
 
 # QA ConversationChain
 
-db = Chroma(embedding_function= Embedding(), persist_directory='./user_db')
-doc_qa_chain = RetrievalQAWithSourcesChain.from_chain_type(llm=llm,
-                                                    chain_type="refine",
-                                                    retriever=db.as_retriever(), 
-                                                    )
 
-# ConversationChain
-template = """You are a friendly bot to interact with users. Be calm and polite
-
-Current conversation:
-{history}
-
-{input}"""
-
-
-conversation_chain = ConversationChain(
-    llm=llm,
-    verbose=True,
-    prompt=PromptTemplate(template=template, input_variables=["history", "input"]),
-    memory=ConversationBufferMemory(ai_prefix='Friend', human_prefix='Sarvagya', )
-)
+summarize_chain = LLMChain(llm=llm, prompt=summary_prompt)
+short_summary_chain = LLMChain(llm=llm, prompt=short_summary_prompt)
+title_chain = LLMChain(llm=llm, prompt=title_prompt)
+formatting_chain = LLMChain(llm=llm, prompt=formatting_prompt)
