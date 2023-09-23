@@ -8,7 +8,13 @@ import Chat from "./Chat";
 import FileUpload from "../upload/Upload";
 import useFileUpload from "../../hook/useFileUpload";
 
-const ChatContainer = ({ chat, setChat, id }) => {
+const ChatContainer = ({
+  chat,
+  setChat,
+  id,
+  messageHistroy,
+  setMessageHistroy,
+}) => {
   const { answer } = useBot();
   const { fileUpload } = useFileUpload();
 
@@ -39,7 +45,7 @@ const ChatContainer = ({ chat, setChat, id }) => {
         ...prev,
         { text: question, isUser: "true", isimage: "false" },
       ]);
-      response = await answer(question, id);
+      response = await answer(question, messageHistroy);
     }
 
     setQuestion("");
@@ -55,6 +61,7 @@ const ChatContainer = ({ chat, setChat, id }) => {
           isimage: "false",
         },
       ]);
+      setMessageHistroy(response[0].messageHistroy);
     }
 
     setIsLoading(false);

@@ -14,6 +14,8 @@ const ChatBot = ({
   initialRender,
   setInitialRender,
   setConversationId,
+  messageHistroy,
+  setMessageHistroy,
 }) => {
   const AuthenticationCtx = useContext(AuthenticationContext);
   const { routerPushChange } = useRouterPush();
@@ -45,6 +47,7 @@ const ChatBot = ({
       }
 
       const sendUserChatById = async () => {
+        if (chat.length <= 2) return;
         const response = await useSendUserChatById(id, chat);
         console.log(response);
       };
@@ -55,7 +58,13 @@ const ChatBot = ({
 
   return (
     <div className={classes.containerchatbot}>
-      <ChatContainer setChat={setChat} chat={chat} id={id} />
+      <ChatContainer
+        setChat={setChat}
+        chat={chat}
+        id={id}
+        messageHistroy={messageHistroy}
+        setMessageHistroy={setMessageHistroy}
+      />
     </div>
   );
 };

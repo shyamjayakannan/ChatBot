@@ -8,6 +8,8 @@ module.exports = getConversation = async (conversationId) => {
       .findOne({ conversationId: conversationId });
 
     const populatedConversation = conversation.messages;
+    const messageHistroy = conversation.messageHistroy;
+
     for (const conversation of populatedConversation) {
       if (conversation.postedById === process.env.CHATBOT_ID) {
         conversation.isUser = "false";
@@ -15,7 +17,7 @@ module.exports = getConversation = async (conversationId) => {
         conversation.isUser = "true";
       }
     }
-    return populatedConversation;
+    return { populatedConversation, messageHistroy };
   } catch (err) {
     console.log("getConversation " + err.message);
     throw err;
