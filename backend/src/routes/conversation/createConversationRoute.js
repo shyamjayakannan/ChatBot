@@ -6,7 +6,7 @@ module.exports = createConversationRoute = {
   path: "/conversations",
   handler: async (req, res) => {
     try {
-      const { name, userId, chat, conversationId } = req.body;
+      const { name, userId, chat, conversationId, messageHistory } = req.body;
       for (const conversation of chat) {
         const newId = v4();
         if (conversation.isUser === "false") {
@@ -21,7 +21,8 @@ module.exports = createConversationRoute = {
         name,
         [process.env.CHATBOT_ID, userId],
         newData,
-        conversationId
+        conversationId,
+        messageHistory
       );
       res.status(200).json(conversationId);
     } catch (err) {
