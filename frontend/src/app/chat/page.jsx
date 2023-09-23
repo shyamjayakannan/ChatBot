@@ -28,6 +28,8 @@ const ChatPages = () => {
     isLoading,
     data: chat,
     setData: setChat,
+    messageHistroy,
+    setMessageHistroy,
   } = useFetchUserChatById(conversationId, []);
 
   useEffect(() => {
@@ -66,6 +68,8 @@ const ChatPages = () => {
           initialRender={initialRender}
           setInitialRender={setInitialRender}
           setConversationId={setConversationId}
+          messageHistroy={messageHistroy}
+          setMessageHistroy={setMessageHistroy}
         />
       </div>
     </div>

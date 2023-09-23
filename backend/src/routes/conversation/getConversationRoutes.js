@@ -40,9 +40,11 @@ module.exports = getConversationRoutes = {
         });
       }
 
-      const conversation = await getConversation(conversationId);
+      const response = await getConversation(conversationId);
+
       res.status(200).json({
-        conversation,
+        conversation: response.populatedConversation,
+        messageHistroy: response.messageHistroy,
       });
     } catch (err) {
       console.log("getConversationRoutes " + err.message);
