@@ -4,7 +4,7 @@ import { useLocalStorage } from "./useLocalStorage";
 export const useFetchUserChatById = (conversationId, defaultValue) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(defaultValue);
-  const [messageHistroy, setMessageHistroy] = useState("");
+  const [messageHistory, setMessageHistory] = useState("");
 
   useEffect(() => {
     const loadResources = async () => {
@@ -39,11 +39,11 @@ export const useFetchUserChatById = (conversationId, defaultValue) => {
 
       const data = await response.json();
       setData(data.conversation);
-      setMessageHistroy(data.messageHistroy);
+      setMessageHistory(data.messageHistory);
       setIsLoading(false);
     };
     loadResources();
   }, [conversationId]);
 
-  return { isLoading, data, setData, messageHistroy, setMessageHistroy };
+  return { isLoading, data, setData, messageHistory, setMessageHistory };
 };

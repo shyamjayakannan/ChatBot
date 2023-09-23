@@ -44,7 +44,7 @@ module.exports = getConversationRoutes = {
 
       res.status(200).json({
         conversation: response.populatedConversation,
-        messageHistroy: response.messageHistroy,
+        messageHistory: response.messageHistory,
       });
     } catch (err) {
       console.log("getConversationRoutes " + err.message);

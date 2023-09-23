@@ -12,8 +12,8 @@ const ChatContainer = ({
   chat,
   setChat,
   id,
-  messageHistroy,
-  setMessageHistroy,
+  messageHistory,
+  setMessageHistory,
 }) => {
   const { answer } = useBot();
   const { fileUpload } = useFileUpload();
@@ -45,7 +45,7 @@ const ChatContainer = ({
         ...prev,
         { text: question, isUser: "true", isimage: "false" },
       ]);
-      response = await answer(question, messageHistroy);
+      response = await answer(question, messageHistory);
     }
 
     setQuestion("");
@@ -61,7 +61,7 @@ const ChatContainer = ({
           isimage: "false",
         },
       ]);
-      setMessageHistroy(response[0].messageHistroy);
+      setMessageHistory(response[0].messageHistory);
     }
 
     setIsLoading(false);

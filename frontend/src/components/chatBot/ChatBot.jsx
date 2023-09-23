@@ -14,8 +14,8 @@ const ChatBot = ({
   initialRender,
   setInitialRender,
   setConversationId,
-  messageHistroy,
-  setMessageHistroy,
+  messageHistory,
+  setMessageHistory,
 }) => {
   const AuthenticationCtx = useContext(AuthenticationContext);
   const { routerPushChange } = useRouterPush();
@@ -62,8 +62,8 @@ const ChatBot = ({
         setChat={setChat}
         chat={chat}
         id={id}
-        messageHistroy={messageHistroy}
-        setMessageHistroy={setMessageHistroy}
+        messageHistory={messageHistory}
+        setMessageHistory={setMessageHistory}
       />
     </div>
   );
