@@ -1,14 +1,15 @@
 # Import necessary libraries
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from agents import *
-import os
-from q_a import *
-
+from tools import *
+import os, sys
+sys.path.append(os.getcwd())
+from prompts import *
+from backendPython.retrivers import *
+from backendPython.agents import *
 app = Flask(__name__)
 
 CORS(app)
-db_retriver = DB_Query('backendPython/info_db')
 
 UPLOAD_FOLDER = 'backendPython/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -18,14 +19,16 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def chatbot():
     try:
         user_input = request.json.get('question')
+        message_history = request.json.get('messageHistory')
+        agent.prev_summary = message_history
+        print(user_input, message_history)
         if user_input:
-            print(user_input)
-            output = db_retriver.run(user_input)
-
+            output = agent.run(user_input)
+            new_message_history = agent.get_chat_summary()
             response_obj = [{
-                "text": output
+                "text": output,
+                "messageHistory":new_message_history
             }]
-            print(response_obj)
             response_headers = {
                 "Access-Control-Allow-Origin": "*"
             }
@@ -55,7 +58,6 @@ def chatbotimage():
             "message": " File uploaded and saved successfully."
         }]
 
-        print(response_obj)
         response_headers = {
             "Access-Control-Allow-Origin": "*"
         }
@@ -66,6 +68,7 @@ def chatbotimage():
 
 
 if __name__ == "__main__":
+    agent = PersonalAgent(prev_summary='')
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
     app.run(host="localhost", port=8501)

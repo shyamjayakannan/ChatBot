@@ -1,6 +1,5 @@
 const useBot = () => {
-  const answer = async (question, id) => {
-    const conversationId = id.substr(0, 3) == "new" ? id.substr(3) : id;
+  const answer = async (question , messageHistory) => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_PYTHON_URL}/chatbot`,
@@ -9,10 +8,7 @@ const useBot = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            question: question,
-            conversationId: conversationId,
-          }),
+          body: JSON.stringify({ question: question ,messageHistory:messageHistory}),
         }
       );
       const data = await response.json();

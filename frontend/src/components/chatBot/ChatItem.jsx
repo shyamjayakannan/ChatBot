@@ -17,7 +17,13 @@ const ChatItem = ({ data }) => {
           ) : (
             <div className={classes.right}>
               <p>You</p>
-              <div className={classes["chat-right"]}>{data.text}</div>
+              <div className={classes["chat-right"]}>
+                <pre>
+                  <code>
+                    {data.text}
+                  </code>
+                </pre>
+              </div>
             </div>
           )}
         </>
@@ -27,7 +33,13 @@ const ChatItem = ({ data }) => {
             <ChatLogo dimL={"22px"} dim={14} />
             <p>Chating Bot</p>
           </div>
-          <div className={classes["chat-left"]}>{data.text}</div>
+          <div className={classes["chat-left"]}>
+            <pre>
+              <code>
+                {data.text}
+              </code>
+            </pre>
+          </div>
         </div>
       )}
     </>

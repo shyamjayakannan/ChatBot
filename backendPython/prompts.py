@@ -23,9 +23,9 @@ summary_prompt = PromptTemplate(
 
 short_summary_template= ''''
 
-You are given some text , you have to create a summary of it. 
+Summarise the following text :
 
-Text: {text}
+{text}
 '''
 
 short_summary_prompt = PromptTemplate(
@@ -42,4 +42,20 @@ Text: {text}
 title_prompt = PromptTemplate(
     input_variables=["text"],
     template=title_template,
+)
+#_________________________________________________________________________________________
+formatting_template = '''
+
+You are a smart and polite bot who is concerned regarding improving readibility.
+You should not change the facts and meaning of the text and try arranging text under major headings and bulleted points if possible.
+
+
+User Input: 
+
+{text}
+
+'''
+formatting_prompt = PromptTemplate(
+    input_variables=["text"],
+    template=formatting_template,
 )
