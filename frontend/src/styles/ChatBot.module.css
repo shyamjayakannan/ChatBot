@@ -122,6 +122,10 @@
   width: fit-content;
   margin-right: auto;
   font-size: 0.9rem;
+  display: table-cell;
+  max-width: 600px;
+  word-wrap: break-word;
+  text-align: left;
 }
 .chat-right {
   background: blue;
@@ -131,7 +135,7 @@
   border-radius: 0px 15px 15px 15px;
   font-size: 0.9rem;
   display: table-cell;
-  max-width: 500px;
+  max-width: 600px;
   word-wrap: break-word;
   text-align: left;
 }

@@ -30,7 +30,7 @@ const ChatBot = ({
       ) {
         var name = chat[1].text.substr(0, 25);
         if (chat[1].text.length > 25) name = name + "..";
-        const newId = await create(name, chat, id.substr(3));
+        const newId = await create(name, chat, id.substr(3), messageHistory);
         routerPushChange(newId);
         setConversationId(newId);
         AuthenticationCtx.setDetails(newId, "", "");
@@ -48,7 +48,7 @@ const ChatBot = ({
 
       const sendUserChatById = async () => {
         if (chat.length <= 2) return;
-        const response = await useSendUserChatById(id, chat);
+        const response = await useSendUserChatById(id, chat, messageHistory);
         console.log(response);
       };
       sendUserChatById();

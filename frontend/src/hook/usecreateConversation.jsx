@@ -2,7 +2,7 @@ import { useLocalStorage } from "./useLocalStorage";
 
 const usecreateConversation = () => {
   const { fetchPersonalDetails } = useLocalStorage();
-  const create = async (name, chat, conversationId) => {
+  const create = async (name, chat, conversationId, messageHistory) => {
     const userId = fetchPersonalDetails().data.id;
     try {
       const response = await fetch(
@@ -17,6 +17,7 @@ const usecreateConversation = () => {
             userId: userId,
             chat: chat,
             conversationId: conversationId,
+            messageHistory: messageHistory,
           }),
         }
       );

@@ -4,7 +4,8 @@ module.exports = createConversation = async (
   name,
   memberIds,
   newData,
-  conversationId
+  conversationId,
+  messageHistory
 ) => {
   try {
     const connection = await getDb();
@@ -15,6 +16,7 @@ module.exports = createConversation = async (
         memberIds: memberIds,
         messages: newData,
         conversationId: conversationId,
+        messageHistory: messageHistory,
       });
     return insertedId;
   } catch (err) {

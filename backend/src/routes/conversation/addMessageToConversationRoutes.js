@@ -12,7 +12,7 @@ module.exports = addMessageToConversationRoutes = {
         userId,
         conversationId
       );
-      const { text } = req.body;
+      const { text, messageHistory } = req.body;
 
       var id = "";
       var message = text.text;
@@ -21,19 +21,31 @@ module.exports = addMessageToConversationRoutes = {
       const isimage = text.isimage;
 
       if (userIsAuthorized) {
-        await addMessageToConversation(message, id, conversationId, isimage);
+        await addMessageToConversation(
+          message,
+          id,
+          conversationId,
+          isimage,
+          messageHistory
+        );
         const updatedConversation = await getConversation(conversationId);
-        res.status(200).json({ updatedConversation });
+        res.status(200).json({
+          conversation: updatedConversation.populatedConversation,
+          messageHistory: updatedConversation.messageHistory,
+        });
       } else {
-        res
-          .status(400)
-          .json({ error: "You are not Authorized!", conversation: [] });
+        res.status(400).json({
+          error: "You are not Authorized!",
+          conversation: [],
+          messageHistory: "",
+        });
       }
     } catch (err) {
       console.log("addMessageToConversationRoutes " + err.message);
       return res.status(400).send({
         error: "Server Error!",
-        messages: [],
+        conversation: [],
+        messageHistory: "",
       });
     }
   },

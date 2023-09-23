@@ -1,6 +1,10 @@
 import { useLocalStorage } from "./useLocalStorage";
 
-export const useSendUserChatById = async (conversationId, chat) => {
+export const useSendUserChatById = async (
+  conversationId,
+  chat,
+  messageHistory
+) => {
   const { fetchPersonalDetails } = useLocalStorage();
   const user = fetchPersonalDetails();
   const userId = user.data.id;
@@ -15,7 +19,10 @@ export const useSendUserChatById = async (conversationId, chat) => {
   const response = await fetch(url, {
     method: "POST",
     headers: headers,
-    body: JSON.stringify({ text: chat[chat.length - 1] }),
+    body: JSON.stringify({
+      text: chat[chat.length - 1],
+      messageHistory: messageHistory,
+    }),
   });
 
   const data = await response.json();

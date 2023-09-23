@@ -5,7 +5,8 @@ module.exports = addMessageToConversation = async (
   messageText,
   userId,
   conversationId,
-  isimage
+  isimage,
+  messageHistory
 ) => {
   try {
     const newId = v4();
@@ -20,6 +21,7 @@ module.exports = addMessageToConversation = async (
       { conversationId: conversationId },
       {
         $push: { messages: newMessage },
+        $set: { messageHistory: messageHistory },
       }
     );
     return "ok";
