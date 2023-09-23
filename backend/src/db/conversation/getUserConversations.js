@@ -8,12 +8,12 @@ module.exports = getUserConversations = async (userId) => {
       .find({ memberIds: userId })
       .toArray();
     const namesAndIds = conversations.map((item) => ({
-      id: item._id,
+      id: item.conversationId,
       name: item.name,
     }));
     return namesAndIds;
   } catch (err) {
-    console.log(err.message);
+    console.log("getUserConversations " + err.message);
     throw err;
   }
 };

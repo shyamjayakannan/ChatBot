@@ -10,7 +10,7 @@ module.exports = getUser = async (userId) => {
       id: user.id,
     };
   } catch (err) {
-    console.log(err.message);
+    console.log("getUser " + err.message);
     throw err;
   }
 };

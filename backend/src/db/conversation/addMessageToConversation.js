@@ -1,5 +1,5 @@
 const getDb = require("../db").getDb;
-const ObjectId = require("mongodb").ObjectId;
+const { v4 } = require("uuid");
 
 module.exports = addMessageToConversation = async (
   messageText,
@@ -8,23 +8,23 @@ module.exports = addMessageToConversation = async (
   isimage
 ) => {
   try {
-    const newId = new ObjectId();
+    const newId = v4();
     const newMessage = {
-      _id: newId,
+      id: newId,
       text: messageText,
       postedById: userId,
       isimage: isimage,
     };
     const connection = await getDb();
     await connection.collection("conversations").updateOne(
-      { _id: new ObjectId(conversationId) },
+      { conversationId: conversationId },
       {
         $push: { messages: newMessage },
       }
     );
     return "ok";
   } catch (err) {
-    console.log(err.message);
+    console.log("addMessageToConversation " + err.message);
     throw err;
   }
 };

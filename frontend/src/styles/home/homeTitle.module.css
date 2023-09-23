@@ -1,0 +1,72 @@
+.section {
+    padding: 10rem 4.8rem;
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: enter 1s forwards;
+}
+
+@keyframes enter {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section h1 {
+    position: relative;
+    font-size: 4rem;
+    margin: 0;
+}
+
+.section p {
+    position: relative;
+    font-size: 1.2rem;
+    color: var(--gray);
+}
+
+.section button {
+    position: relative;
+    margin-top: 3rem;
+    background-color: var(--primary-color);
+    appearance: none;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    color: var(--white-light-color);
+    font-weight: bold;
+}
+
+.shape {
+    position: absolute;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    height: 1000px;
+    width: 1000px;
+    top: -500px;
+    left: -500px;
+    animation: resize 1.5s forwards;
+}
+
+@keyframes resize {
+    from {
+        scale: 0;
+        opacity: 0;
+    }
+    to {
+        scale: 1;
+        opacity: 1;
+    }
+}

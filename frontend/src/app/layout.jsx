@@ -5,11 +5,18 @@ import { Oxanium } from "next/font/google";
 const oxanium = Oxanium({ subsets: ["latin"] });
 import Script from "next/script";
 import Footer from "../components/footer/Footer";
-import NewChat from "../components/newChat/NewChat";
 import Auth from "../components/authentication/Auth";
 import Notifications from "../components/notification/Notifications";
 import { AuthenticationContextProvider } from "../store/authentication/Authentication-context";
 import { NotificationContextProvider } from "../store/notification/Notification-context";
+import { ThemeContextProvider } from "../store/theme/Theme-context";
+
+/* 
+  next first runs server-side and window is undefined server-side.
+  so run it only when it runs the DOM in frontend when it is defined
+*/
+// load page at top
+if (typeof window !== "undefined") window.history.scrollRestoration = "manual";
 
 export const metadata = {
   title: "Chat Bot",
@@ -22,25 +29,17 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <meta name="viewport" content="initial-scale=1, width=device-width" />
       <body className={oxanium.className}>
-        <NotificationContextProvider>
-          <AuthenticationContextProvider>
-            <Notifications />
-            <Auth />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <div style={{ flex: "1" }}>
-                <NewChat />
-              </div>
-              <div style={{ flex: "4" }}>{children}</div>
-            </div>
-            <Footer />
-            <Script />
-          </AuthenticationContextProvider>
-        </NotificationContextProvider>
+        <ThemeContextProvider>
+          <NotificationContextProvider>
+            <AuthenticationContextProvider>
+              <Notifications />
+              <Auth />
+              {children}
+              <Footer />
+              <Script />
+            </AuthenticationContextProvider>
+          </NotificationContextProvider>
+        </ThemeContextProvider>
       </body>
     </html>
   );
