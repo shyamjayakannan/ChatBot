@@ -29,7 +29,7 @@ export default function Navbar() {
                 <li>yaay</li>
                 <li>yaay</li>
             </ul>
-            <input type="checkbox" id="theme-toggle" onChange={changeTheme} />
+            <input type="checkbox" id="theme-toggle" onChange={changeTheme} defaultChecked={themeCtx.theme} />
             <label htmlFor="theme-toggle">
                 <div>
                     {themeCtx.theme ? <Image src="/sun-24.png" width={20} height={20} alt="sun" />

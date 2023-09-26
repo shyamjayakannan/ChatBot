@@ -43,6 +43,7 @@
     margin-top: 3rem;
     background-color: var(--primary-color);
     appearance: none;
+    border: none;
     border-radius: 1rem;
     padding: 1rem 2rem;
     color: var(--white-light-color);
